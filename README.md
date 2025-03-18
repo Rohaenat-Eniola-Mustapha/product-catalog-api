@@ -29,7 +29,7 @@ This project is a RESTful API built with Node.js and Express.js for managing a p
 
 1.  Clone the repository:
     ```bash
-    git clone [YOUR_REPOSITORY_URL]
+    git clone (https://github.com/Rohaenat-Eniola-Mustapha/product-catalog-api.git)
     cd product-catalog-api
     ```
 2.  Install dependencies:
@@ -45,7 +45,7 @@ This project is a RESTful API built with Node.js and Express.js for managing a p
     # or
     yarn start
     ```
-    The API will be accessible at `http://localhost:[PORT]` (default port is often 3000).
+    The API will be accessible at `http://localhost:3000`
 
 ## API Documentation
 
