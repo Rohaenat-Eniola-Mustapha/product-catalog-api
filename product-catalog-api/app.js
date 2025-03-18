@@ -10,13 +10,33 @@ const categories = [];
 // Product Endpoints
 app.post('/products', (req, res) => {
     const { name, description, price, categoryId, inventory = 0, discount = 0 } = req.body;
-    if (!name || !description || price === undefined || categoryId === undefined) {
-        return res.status(400).json({ error: 'Missing required fields' });
+    if (!name) {
+        return res.status(400).json({ error: 'Missing required field: name' });
     }
-    // Basic check if the category exists
+    if (!description) {
+        return res.status(400).json({ error: 'Missing required field: description' });
+    }
+    if (price === undefined) {
+        return res.status(400).json({ error: 'Missing required field: price' });
+    }
+    if (categoryId === undefined) {
+        return res.status(400).json({ error: 'Missing required field: categoryId' });
+    }
+    if (isNaN(parseFloat(price)) || parseFloat(price) <= 0) {
+        return res.status(400).json({ error: 'Price must be a positive number' });
+    }
+    if (isNaN(parseInt(categoryId)) || parseInt(categoryId) <= 0) {
+        return res.status(400).json({ error: 'CategoryId must be a positive integer' });
+    }
     const categoryExists = categories.some((c) => c.id === parseInt(categoryId));
     if (!categoryExists) {
         return res.status(400).json({ error: 'Invalid categoryId' });
+    }
+    if (inventory !== undefined && isNaN(parseInt(inventory))) {
+        return res.status(400).json({ error: 'Inventory must be an integer' });
+    }
+    if (discount !== undefined && (isNaN(parseFloat(discount)) || parseFloat(discount) < 0 || parseFloat(discount) > 100)) {
+        return res.status(400).json({ error: 'Discount must be a number between 0 and 100' });
     }
     const newProduct = {
         id: products.length + 1,
@@ -45,8 +65,10 @@ app.put('/products/:id', (req, res) => {
         return res.status(404).json({ error: 'Product not found' });
     }
 
-    // Basic check if the category exists (if categoryId is provided)
     if (categoryId !== undefined) {
+        if (isNaN(parseInt(categoryId)) || parseInt(categoryId) <= 0) {
+            return res.status(400).json({ error: 'CategoryId must be a positive integer' });
+        }
         const categoryExists = categories.some((c) => c.id === parseInt(categoryId));
         if (!categoryExists) {
             return res.status(400).json({ error: 'Invalid categoryId' });
@@ -54,12 +76,30 @@ app.put('/products/:id', (req, res) => {
         products[productIndex].categoryId = parseInt(categoryId);
     }
 
-    // Update other fields if provided
+    if (price !== undefined) {
+        if (isNaN(parseFloat(price)) || parseFloat(price) <= 0) {
+            return res.status(400).json({ error: 'Price must be a positive number' });
+        }
+        products[productIndex].price = parseFloat(price);
+    }
+
+    if (inventory !== undefined) {
+        if (isNaN(parseInt(inventory))) {
+            return res.status(400).json({ error: 'Inventory must be an integer' });
+        }
+        products[productIndex].inventory = parseInt(inventory);
+    }
+
+    if (discount !== undefined) {
+        if (isNaN(parseFloat(discount)) || parseFloat(discount) < 0 || parseFloat(discount) > 100) {
+            return res.status(400).json({ error: 'Discount must be a number between 0 and 100' });
+        }
+        products[productIndex].discount = parseFloat(discount);
+    }
+
+    // Update name and description if provided
     if (name) products[productIndex].name = name;
     if (description) products[productIndex].description = description;
-    if (price !== undefined) products[productIndex].price = parseFloat(price);
-    if (inventory !== undefined) products[productIndex].inventory = parseInt(inventory);
-    if (discount !== undefined) products[productIndex].discount = parseFloat(discount);
 
     res.json(products[productIndex]);
 });
@@ -112,6 +152,9 @@ app.put('/products/:id/inventory', (req, res) => {
     if (inventory === undefined) {
         return res.status(400).json({ error: 'Missing inventory value' });
     }
+    if (isNaN(parseInt(inventory))) {
+        return res.status(400).json({ error: 'Inventory must be an integer' });
+    }
     const productIndex = products.findIndex((p) => p.id === productId);
     if (productIndex === -1) {
         return res.status(404).json({ error: 'Product not found' });
@@ -123,8 +166,11 @@ app.put('/products/:id/inventory', (req, res) => {
 // Category Endpoints
 app.post('/categories', (req, res) => {
     const { name, description } = req.body;
-    if (!name || !description) {
-        return res.status(400).json({ error: 'Missing required fields for category' });
+    if (!name) {
+        return res.status(400).json({ error: 'Missing required field: name' });
+    }
+    if (!description) {
+        return res.status(400).json({ error: 'Missing required field: description' });
     }
     const newCategory = {
         id: categories.length + 1,
