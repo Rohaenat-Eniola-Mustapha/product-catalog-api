@@ -163,6 +163,72 @@ app.put('/products/:id/inventory', (req, res) => {
     res.json({ message: 'Inventory updated successfully', inventory: products[productIndex].inventory });
 });
 
+// Update product variant
+app.put('/products/:productId/variants/:variantId', (req, res) => {
+    const productId = parseInt(req.params.productId);
+    const variantId = parseInt(req.params.variantId);
+    const { size, color, ...otherVariantDetails } = req.body;
+
+    const product = products.find((p) => p.id === productId);
+    if (!product) {
+        return res.status(404).json({ error: 'Product not found' });
+    }
+
+    const variantToUpdate = product.variants && product.variants.find(v => v.id === variantId);
+    if (!variantToUpdate) {
+        return res.status(404).json({ error: 'Variant not found' });
+    }
+
+    if (size) variantToUpdate.size = size;
+    if (color) variantToUpdate.color = color;
+    Object.keys(otherVariantDetails).forEach(key => {
+        variantToUpdate[key] = otherVariantDetails[key];
+    });
+
+    res.json(variantToUpdate);
+});
+
+// Delete product variant
+app.delete('/products/:productId/variants/:variantId', (req, res) => {
+    const productId = parseInt(req.params.productId);
+    const variantId = parseInt(req.params.variantId);
+
+    const product = products.find((p) => p.id === productId);
+    if (!product) {
+        return res.status(404).json({ error: 'Product not found' });
+    }
+
+    const initialLength = product.variants ? product.variants.length : 0;
+    product.variants = product.variants && product.variants.filter(v => v.id !== variantId);
+
+    if (!product.variants || product.variants.length === initialLength) {
+        return res.status(404).json({ error: 'Variant not found' });
+    }
+
+    res.status(204).send();
+});
+
+// Create product variant
+app.post('/products/:productId/variants', (req, res) => {
+    const productId = parseInt(req.params.productId);
+    const { size, color, ...otherVariantDetails } = req.body;
+
+    const product = products.find((p) => p.id === productId);
+    if (!product) {
+        return res.status(404).json({ error: 'Product not found' });
+    }
+
+    const newVariant = {
+        id: product.variants ? product.variants.length + 1 : 1, // Simple ID generation
+        size,
+        color,
+        ...otherVariantDetails
+    };
+    product.variants = product.variants || [];
+    product.variants.push(newVariant);
+    res.status(201).json(newVariant);
+});
+
 // Category Endpoints
 app.post('/categories', (req, res) => {
     const { name, description } = req.body;
