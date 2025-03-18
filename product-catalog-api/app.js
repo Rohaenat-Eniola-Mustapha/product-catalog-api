@@ -292,6 +292,13 @@ app.delete('/categories/:id', (req, res) => {
     res.status(204).send(); // 204 No Content for successful deletion
 });
 
+// Report low stock items
+app.get('/reports/low-stock', (req, res) => {
+    const lowStockThreshold = 5;
+    const lowStockProducts = products.filter(product => product.inventory <= lowStockThreshold);
+    res.json(lowStockProducts);
+});
+
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
