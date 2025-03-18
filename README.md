@@ -169,10 +169,6 @@ This project is a RESTful API built with Node.js and Express.js for managing a p
   - **Response (JSON):** An array of product objects with inventory less than or equal to 5.
   - **Status Codes:** `200 OK`.
 
-## Example Requests and Responses
-
-This section will provide examples once you have a better understanding of your API's usage.
-
 ## Assumptions and Limitations
 
 - The API uses in-memory storage (arrays) for products and categories. Data will be lost when the server restarts. A database would be required for persistent storage.
