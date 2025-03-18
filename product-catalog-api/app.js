@@ -166,11 +166,11 @@ app.put('/products/:id/inventory', (req, res) => {
 // Category Endpoints
 app.post('/categories', (req, res) => {
     const { name, description } = req.body;
-    if (!name) {
-        return res.status(400).json({ error: 'Missing required field: name' });
+    if (!name || typeof name !== 'string' || name.trim() === '') {
+        return res.status(400).json({ error: 'Name is required and must be a non-empty string' });
     }
-    if (!description) {
-        return res.status(400).json({ error: 'Missing required field: description' });
+    if (!description || typeof description !== 'string') {
+        return res.status(400).json({ error: 'Description is required and must be a string' });
     }
     const newCategory = {
         id: categories.length + 1,
@@ -201,7 +201,18 @@ app.put('/categories/:id', (req, res) => {
     if (categoryIndex === -1) {
         return res.status(404).json({ error: 'Category not found' });
     }
-    categories[categoryIndex] = { ...categories[categoryIndex], name, description };
+    if (name !== undefined) {
+        if (typeof name !== 'string' || name.trim() === '') {
+            return res.status(400).json({ error: 'Name must be a non-empty string' });
+        }
+        categories[categoryIndex].name = name;
+    }
+    if (description !== undefined) {
+        if (typeof description !== 'string') {
+            return res.status(400).json({ error: 'Description must be a string' });
+        }
+        categories[categoryIndex].description = description;
+    }
     res.json(categories[categoryIndex]);
 });
 
