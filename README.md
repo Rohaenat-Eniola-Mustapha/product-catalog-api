@@ -8,7 +8,6 @@ This project is a RESTful API built with Node.js and Express.js for managing a p
 - [Prerequisites](#prerequisites)
 - [Setup and Installation](#setup-and-installation)
 - [API Documentation](#api-documentation)
-- [Example Requests and Responses](#example-requests-and-responses)
 - [Assumptions and Limitations](#assumptions-and-limitations)
 
 ## Features
