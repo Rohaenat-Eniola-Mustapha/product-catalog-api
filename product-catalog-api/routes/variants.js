@@ -5,12 +5,12 @@ const variantController = require('../controllers/variants');
 const { validateProductIdParam, validateVariantIdParam } = require('../middleware/validation');
 
 // Create a product variant
-router.post('/', validateProductIdParam, variantController.createVariant);
+router.post('/:productId/variants', validateProductIdParam, variantController.createVariant);
 
 // Update a product variant
-router.put('/:variantId', validateProductIdParam, validateVariantIdParam, variantController.updateVariant);
+router.put('/:productId/variants/:variantId', validateProductIdParam, validateVariantIdParam, variantController.updateVariant);
 
 // Delete a product variant
-router.delete('/:variantId', validateProductIdParam, validateVariantIdParam, variantController.deleteVariant);
+router.delete('/:productId/variants/:variantId', validateProductIdParam, validateVariantIdParam, variantController.deleteVariant);
 
 module.exports = router;

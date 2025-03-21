@@ -23,7 +23,7 @@ const validateProductCreation = [
 
 const validateProductIdParam = [
     (req, res, next) => {
-        console.log("req.params:", req.params);
+        console.log("req.params:", req.params); // Keep this for debugging
         next();
     },
     param('productId').isMongoId().withMessage('Invalid productId'),

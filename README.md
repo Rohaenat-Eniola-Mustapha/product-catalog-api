@@ -8,6 +8,7 @@ This project is a RESTful API built with Node.js and Express.js for managing a p
 - [Prerequisites](#prerequisites)
 - [Setup and Installation](#setup-and-installation)
 - [API Documentation](#api-documentation)
+- [Example Requests & Responses](#example-requests--responses)
 - [Assumptions and Limitations](#assumptions-and-limitations)
 
 ## Features
@@ -167,6 +168,10 @@ This project is a RESTful API built with Node.js and Express.js for managing a p
 - **Get Low Stock Items (`GET /reports/low-stock`):**
   - **Response (JSON):** An array of product objects with inventory less than or equal to 5.
   - **Status Codes:** `200 OK`.
+
+## Example Requests & Responses
+
+
 
 ## Assumptions and Limitations
 
