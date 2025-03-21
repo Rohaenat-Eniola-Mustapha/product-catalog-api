@@ -22,7 +22,7 @@ app.use(express.json());
 app.use('/products', productRoutes);
 app.use('/categories', categoryRoutes);
 app.use('/reports', reportRoutes);
-app.use('/products', variantRoutes);
+app.use('/products/:productId/variants', variantRoutes); // Update this line
 
 // Basic route
 app.get('/', (req, res) => {
