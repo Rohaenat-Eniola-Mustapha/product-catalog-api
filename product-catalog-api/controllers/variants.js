@@ -1,25 +1,27 @@
 const Product = require('../models/Product');
+const Variant = require('../models/Variant');
 
 const createVariant = async (req, res) => {
     try {
-        const productId = req.params.productId;
-        const { size, color, ...otherVariantDetails } = req.body;
+        const productId = req.params.productId; //Corrected productId usage.
+        const { size, color, material } = req.body;
 
         const product = await Product.findById(productId);
         if (!product) {
             return res.status(404).json({ error: 'Product not found' });
         }
 
-        const newVariant = {
+        const newVariant = new Variant({
             size,
             color,
-            ...otherVariantDetails
-        };
+            material,
+        });
 
-        product.variants.push(newVariant);
+        const savedVariant = await newVariant.save();
+        product.variants.push(savedVariant._id);
         await product.save();
 
-        res.status(201).json(newVariant);
+        res.status(201).json(savedVariant);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
