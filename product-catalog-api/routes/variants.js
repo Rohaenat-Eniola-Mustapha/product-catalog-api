@@ -3,10 +3,6 @@ const router = express.Router({ mergeParams: true });
 const variantController = require('../controllers/variants');
 const { validateProductIdParam } = require('../middleware/validation');
 
-const {
-    validateProductIdParam // Assuming you have this
-} = require('../middleware/validation');
-
 // Create a product variant
 router.post('/', validateProductIdParam, variantController.createVariant);
 
