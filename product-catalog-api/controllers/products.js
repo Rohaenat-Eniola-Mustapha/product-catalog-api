@@ -89,10 +89,34 @@ const deleteProduct = async (req, res) => {
     }
 };
 
+const searchProducts = async (req, res) => {
+    try {
+        const { query } = req.query;
+
+        if (!query) {
+            return res.status(400).json({ error: 'Search query is required' });
+        }
+
+        const results = await Product.find({
+            $or: [
+                { name: { $regex: query, $options: 'i' } },
+                { description: { $regex: query, $options: 'i' } },
+                { 'categoryId.name': { $regex: query, $options: 'i' } },
+                { 'categoryId.description': { $regex: query, $options: 'i' } },
+            ],
+        }).populate('categoryId');
+
+        res.json(results);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 module.exports = {
     createProduct,
     getAllProducts,
     getProductById,
     updateProduct,
     deleteProduct,
+    searchProducts,
 };
