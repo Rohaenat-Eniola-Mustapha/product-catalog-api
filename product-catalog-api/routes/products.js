@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/products');
+
 const {
     validateProductCreation,
     validateProductIdParam,
@@ -12,5 +13,6 @@ router.get('/', productController.getAllProducts);
 router.get('/:id', validateProductIdParam, productController.getProductById);
 router.put('/:id', validateProductIdParam, validateProductUpdate, productController.updateProduct);
 router.delete('/:id', validateProductIdParam, productController.deleteProduct);
+router.get('/search', productController.searchProducts);
 
 module.exports = router;
