@@ -15,14 +15,14 @@ const validateProductCreation = [
     body('name').isString().notEmpty().trim(),
     body('description').isString(),
     body('price').isFloat({ min: 0 }),
-    body('categoryId').isInt({ min: 1 }),
+    body('categoryId').isMongoId().withMessage('Invalid categoryId'),
     body('inventory').isInt({ min: 0 }).optional(),
     body('discount').isFloat({ min: 0, max: 100 }).optional(),
     handleValidationErrors,
 ];
 
 const validateProductIdParam = [
-    param('id').isMongoId().withMessage('Invalid productId'), // Use isMongoId
+    param('id').isMongoId().withMessage('Invalid productId'),
     handleValidationErrors,
 ];
 
@@ -30,7 +30,7 @@ const validateProductUpdate = [
     body('name').isString().notEmpty().trim().optional(),
     body('description').isString().optional(),
     body('price').isFloat({ min: 0 }).optional(),
-    body('categoryId').isInt({ min: 1 }).optional(),
+    body('categoryId').isMongoId().withMessage('Invalid categoryId').optional(),
     body('inventory').isInt({ min: 0 }).optional(),
     body('discount').isFloat({ min: 0, max: 100 }).optional(),
     handleValidationErrors,
@@ -44,7 +44,7 @@ const validateCategoryCreation = [
 ];
 
 const validateCategoryIdParam = [
-    param('id').isMongoId().withMessage('Invalid categoryId'), // Use isMongoId
+    param('id').isMongoId().withMessage('Invalid categoryId'),
     handleValidationErrors,
 ];
 
