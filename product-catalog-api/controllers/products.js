@@ -90,6 +90,7 @@ const deleteProduct = async (req, res) => {
 };
 
 const searchProducts = async (req, res) => {
+    console.log("req.query:", req.query); // Add this line
     try {
         const { query } = req.query;
 
