@@ -214,7 +214,7 @@ This project is a RESTful API built with Node.js and Express.js for managing a p
         ],
         "__v": 3
       }
-      ```
+  ```
 
 - **Response (Error - 400 Bad Request):**
 
@@ -231,9 +231,122 @@ This project is a RESTful API built with Node.js and Express.js for managing a p
   }
   ```
 
+2. **Get All Products:**
+
+- **Request:**.
+  - **Method:** `GET`
+  - **URL:** `http://localhost:3000/products`
+
+- **Response (Success - 201 OK):**
+
+```json
+[
+    {
+        "_id": "67dd2b7fc4bab6b492dcbf55",
+        "name": "T-shirt",
+        "description": "It comes in different shapes, colors and sizes. It also is for both male and female.",
+        "price": 99.99,
+        "categoryId": {
+            "_id": "67dbeb099e765786524b3ec4",
+            "name": "Clothing",
+            "description": "Apparel and fashion items",
+            "__v": 0
+        },
+        "inventory": 100,
+        "discount": 10,
+        "variants": [
+            "67dd35ec9a2971a097d0799e",
+            "67dd36229a2971a097d079a2",
+            "67dd36409a2971a097d079a6"
+        ],
+        "__v": 3
+    },
+    {
+        "_id": "67dd2bc4c4bab6b492dcbf58",
+        "name": "Gowns",
+        "description": "It is a long dress.It comes in different shapes, colors and sizes. It also only for females.",
+        "price": 99.99,
+        "categoryId": {
+            "_id": "67dbeb099e765786524b3ec4",
+            "name": "Clothing",
+            "description": "Apparel and fashion items",
+            "__v": 0
+        },
+        "inventory": 70,
+        "discount": 5,
+        "variants": [],
+        "__v": 0
+    },
+    {
+        "_id": "67dd2c04c4bab6b492dcbf5b",
+        "name": "Pyjamas",
+        "description": "It is an outfit only for the night. This is available for both genders. It comes in different colors.",
+        "price": 29.99,
+        "categoryId": {
+            "_id": "67dbeb099e765786524b3ec4",
+            "name": "Clothing",
+            "description": "Apparel and fashion items",
+            "__v": 0
+        },
+        "inventory": 20,
+        "discount": 50,
+        "variants": [],
+        "__v": 0
+    },
+    {
+        "_id": "67dd2c4dc4bab6b492dcbf5e",
+        "name": "iPhone 16",
+        "description": "Latest iPhone with the best features in the product",
+        "price": 399.99,
+        "categoryId": {
+            "_id": "67dbe9f39e765786524b3ebf",
+            "name": "Electronics",
+            "description": "Electronic devices and accessories",
+            "__v": 0
+        },
+        "inventory": 100,
+        "discount": 2,
+        "variants": [],
+        "__v": 0
+    },
+    {
+        "_id": "67dd2c7fc4bab6b492dcbf61",
+        "name": "Samsung Tablet",
+        "description": "Flat samsung tablet for both work and children's entertainmnet",
+        "price": 599.99,
+        "categoryId": {
+            "_id": "67dbe9f39e765786524b3ebf",
+            "name": "Electronics",
+            "description": "Electronic devices and accessories",
+            "__v": 0
+        },
+        "inventory": 50,
+        "discount": 5,
+        "variants": [],
+        "__v": 0
+    },
+    {
+        "_id": "67dd2cc8c4bab6b492dcbf64",
+        "name": "Lenovo Desktop",
+        "description": "This brings your gamming experience to life, your business ten times lesser and easy to carry.",
+        "price": 999.99,
+        "categoryId": {
+            "_id": "67dbe9f39e765786524b3ebf",
+            "name": "Electronics",
+            "description": "Electronic devices and accessories",
+            "__v": 0
+        },
+        "inventory": 80,
+        "discount": 50,
+        "variants": [],
+        "__v": 0
+    }
+]
+```
+
 ## Assumptions and Limitations
 
 - The API uses MongoDB for products and categories. Data will not be lost when the server restarts.
 - Basic error handling and input validation are implemented, but could be further enhanced for production use.
-- Authentication and authorization are not implemented in this version.
+- Authentication and authorization are not implemented in this project.
 - The variant management is basic. More complex scenarios (e.g., different pricing or inventory per variant) are not supported.
