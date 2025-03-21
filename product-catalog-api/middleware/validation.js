@@ -1,4 +1,5 @@
-const { body, param, validationResult } = require('express-validator');
+// const { body, param, validationResult } = require('express-validator');
+const { body, param, validationResult, isMongoId } = require('express-validator');
 
 // Generic validation error handler
 const handleValidationErrors = (req, res, next) => {
@@ -21,7 +22,7 @@ const validateProductCreation = [
 ];
 
 const validateProductIdParam = [
-    param('id').isInt({ min: 1 }),
+    param('id').isMongoId().withMessage('Invalid productId'), // Use isMongoId
     handleValidationErrors,
 ];
 
@@ -43,7 +44,7 @@ const validateCategoryCreation = [
 ];
 
 const validateCategoryIdParam = [
-    param('id').isInt({ min: 1 }),
+    param('id').isMongoId().withMessage('Invalid categoryId'), // Use isMongoId
     handleValidationErrors,
 ];
 
