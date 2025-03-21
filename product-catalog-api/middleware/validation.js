@@ -54,6 +54,11 @@ const validateCategoryUpdate = [
     handleValidationErrors,
 ];
 
+const validateVariantIdParam = [
+    param('variantId').isMongoId().withMessage('Invalid variantId'),
+    handleValidationErrors,
+];
+
 module.exports = {
     handleValidationErrors,
     validateProductCreation,
@@ -62,4 +67,5 @@ module.exports = {
     validateCategoryCreation,
     validateCategoryIdParam,
     validateCategoryUpdate,
+    validateVariantIdParam,
 };
