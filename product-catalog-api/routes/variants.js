@@ -1,6 +1,8 @@
 const express = require('express');
-const router = express.Router({ mergeParams: true }); // Important for accessing productId
+const router = express.Router({ mergeParams: true });
 const variantController = require('../controllers/variants');
+const { validateProductIdParam } = require('../middleware/validation');
+
 const {
     validateProductIdParam // Assuming you have this
 } = require('../middleware/validation');
