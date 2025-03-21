@@ -171,11 +171,69 @@ This project is a RESTful API built with Node.js and Express.js for managing a p
 
 ## Example Requests & Responses
 
+1. **Create a Product:**
 
+- **Request:**
+  - **Method:** `POST`
+  - **URL:** `http://localhost:3000/products`
+  - **Headers:** `Content-Type: application/json`
+  - **Body (JSON):**
+
+      ```json
+      {
+        "_id": "67dd2b7fc4bab6b492dcbf55",
+        "name": "T-shirt",
+        "description": "It comes in different shapes, colors and sizes. It also is for both male and female.",
+        "price": 99.99,
+        "categoryId": "67dbeb099e765786524b3ec4",
+        "inventory": 100,
+        "discount": 10,
+      }
+      ```
+
+- **Response (Success - 201 Created):**
+
+  ```json
+      {
+        "_id": "67dd2b7fc4bab6b492dcbf55",
+        "name": "T-shirt",
+        "description": "It comes in different shapes, colors and sizes. It also is for both male and female.",
+        "price": 99.99,
+        "categoryId": {
+            "_id": "67dbeb099e765786524b3ec4",
+            "name": "Clothing",
+            "description": "Apparel and fashion items",
+            "__v": 0
+        },
+        "inventory": 100,
+        "discount": 10,
+        "variants": [
+            "67dd35ec9a2971a097d0799e",
+            "67dd36229a2971a097d079a2",
+            "67dd36409a2971a097d079a6"
+        ],
+        "__v": 3
+      }
+      ```
+
+- **Response (Error - 400 Bad Request):**
+
+  ```json
+  {
+    "errors": [
+        {
+            "type": "field",
+            "msg": "Invalid categoryId",
+            "path": "categoryId",
+            "location": "body"
+        }
+    ]
+  }
+  ```
 
 ## Assumptions and Limitations
 
-- The API uses in-memory storage (arrays) for products and categories. Data will be lost when the server restarts. A database would be required for persistent storage.
+- The API uses MongoDB for products and categories. Data will not be lost when the server restarts.
 - Basic error handling and input validation are implemented, but could be further enhanced for production use.
 - Authentication and authorization are not implemented in this version.
 - The variant management is basic. More complex scenarios (e.g., different pricing or inventory per variant) are not supported.
