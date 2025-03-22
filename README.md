@@ -31,7 +31,7 @@ This project is a RESTful API built with Node.js and Express.js for managing a p
 1. Clone the repository:
 
     ```bash
-    git clone <repository_url>
+    git clone <[repository_url](https://github.com/Rohaenat-Eniola-Mustapha/product-catalog-api.git)>
     cd product-catalog-api
     ```
 
