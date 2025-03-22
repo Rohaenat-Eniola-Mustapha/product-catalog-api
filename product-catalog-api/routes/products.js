@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/products');
+const auth = require('../middleware/auth'); // Import auth middleware
+const authorize = require('../middleware/authorize'); // Import authorize middleware
 
 const {
     validateProductCreation,
@@ -8,11 +10,12 @@ const {
     validateProductUpdate,
 } = require('../middleware/validation');
 
-router.post('/', validateProductCreation, productController.createProduct);
+//  Combine the two POST /products routes into one
+router.post('/', auth, authorize(['admin']), validateProductCreation, productController.createProduct);
 router.get('/', productController.getAllProducts);
 router.get('/:id', validateProductIdParam, productController.getProductById);
-router.put('/:id', validateProductIdParam, validateProductUpdate, productController.updateProduct);
-router.delete('/:id', validateProductIdParam, productController.deleteProduct);
+router.put('/:id', auth, authorize(['admin']), validateProductIdParam, validateProductUpdate, productController.updateProduct); //Added auth and authorize
+router.delete('/:id', auth, authorize(['admin']), validateProductIdParam, productController.deleteProduct); //Added auth and authorize
 router.get('/search', productController.searchProducts);
 
 module.exports = router;

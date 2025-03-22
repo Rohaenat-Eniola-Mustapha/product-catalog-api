@@ -6,6 +6,8 @@ const productRoutes = require('./routes/products.js');
 const categoryRoutes = require('./routes/categories');
 const reportRoutes = require('./routes/reports');
 const variantRoutes = require('./routes/variants');
+const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/users');
 
 // Load env vars
 dotenv.config();
@@ -22,7 +24,9 @@ app.use(express.json());
 app.use('/products', productRoutes);
 app.use('/categories', categoryRoutes);
 app.use('/reports', reportRoutes);
-app.use('/products/:productId/variants', variantRoutes); // Update this line
+app.use('/products/:productId/variants', variantRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 
 // Basic route
 app.get('/', (req, res) => {
